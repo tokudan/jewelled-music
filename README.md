@@ -2,6 +2,11 @@
 
 TODO: Write a gem description
 
+A ruby gem that manages your music library.
+Functions:
+	- Automatically moves files according to their tags
+	- Mirrors your library to a second directory, optionally reencoding your files with lower bit rate in a different format
+
 ## Installation
 
 Add this line to your application's Gemfile:
