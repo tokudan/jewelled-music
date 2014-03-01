@@ -1,3 +1,5 @@
+require 'jewelled/music/track'
+
 module Jewelled
 	module Music
 		class Library

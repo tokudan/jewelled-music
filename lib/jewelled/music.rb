@@ -1,5 +1,5 @@
 require 'jewelled/music/version'
-require 'jewelled/music/track'
+require 'jewelled/music/library'
 
 module Jewelled
 	module Music
