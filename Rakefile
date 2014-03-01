@@ -1,6 +1,6 @@
 #require "bundler/gem_tasks"
 
-task :default => [:cleanup, :build, :userinstall]
+task :default => [:cleanup, :build, :install]
 
 task :cleanup do
 	Dir.glob('*.gem') do |f|
@@ -14,7 +14,7 @@ task :build do
 	end
 end
 
-task :userinstall do
+task :install do
 	Dir.glob('*.gem') do |gem|
 		system('gem', 'install', gem, '--user-install')
 	end
