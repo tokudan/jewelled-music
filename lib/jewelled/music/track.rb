@@ -3,12 +3,16 @@ require 'open3'
 module Jewelled
 	module Music
 		class Track
-			attr_reader :info
+			attr_reader :info, :valid
 
 			def initialize(file)
 				@path = File.absolute_path(file)
 				@info = nil
 				read_metadata
+				# Valid confirms that this track actually is valid in the sense that it contains
+				# music, metadata is readable, etc.
+				# TODO: implement some sanity checks
+				@valid = true
 			end
 
 			def read_metadata
