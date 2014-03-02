@@ -3,7 +3,7 @@ require 'jewelled/music/track'
 module Jewelled
 	module Music
 		class Library
-			attr_reader :organize, :path
+			attr_reader :path
 
 			def initialize(path, options = Hash.new)
 				# @path contains the absolute path to the root directory of the music library
@@ -25,6 +25,17 @@ module Jewelled
 
 			def scan_files
 				scan_directory(Dir.new(@path))
+				organize if @organize
+			end
+
+			def organize
+				@library.each_pair { |path, track|
+					# path contains a full path to a track. It should start with @path.
+					# Sanity check
+					raise unless path.start_with?(@path)
+
+					# /<[^>]+>/
+				}
 			end
 
 			def scan_directory(directory)
