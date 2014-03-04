@@ -3,7 +3,8 @@ require 'open3'
 module Jewelled
 	module Music
 		class Track
-			attr_reader :info, :valid
+			# TODO: Write a decent interface for @info
+		attr_reader :info, :valid
 
 			def initialize(file)
 				@path = File.absolute_path(file)
