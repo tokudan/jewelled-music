@@ -78,6 +78,7 @@ module Jewelled
 						when 'directory' then
 							scan_directory(Dir.new(path))
 						else
+							puts "Skipping #{path}"
 							nil
 					end
 				}
