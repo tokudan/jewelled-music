@@ -29,12 +29,39 @@ module Jewelled
 			end
 
 			def organize
+				# The regular expression used to parse a variable
+				variable_reg_ex = /^<(?<variable>[^:]+)(:(?<spacer> |0)?(?<width>[0-9]+)?(=(?<default>.*))?)?>$/
 				@library.each_pair { |path, track|
 					# path contains a full path to a track. It should start with @path.
 					# Sanity check
 					raise unless path.start_with?(@path)
-
-					# /<[^>]+>/
+					raise unless track.class == Track
+					puts "pattern: #{@organize}"
+					new_path = @organize.gsub(/<[^>]+>/) { |match|
+						# Parse the variable and the options
+						match_data = variable_reg_ex.match(match)
+						raise "Error in pattern #{match}" unless match_data
+						variable = match_data[:variable]
+						default = "#{variable} unknown"
+						default = match_data[:default] if match_data[:default]
+						spacer = match_data[:spacer]
+						# nil can be converted to integer without any problems
+						width = match_data[:width].to_i
+						# Make sure the spacer is a string instead of nil
+						spacer = "" unless spacer
+						value = track.info[variable]
+						# If there is no information about the variable, return Unknown
+						value = default if value == nil
+						# Adjust the length...
+						if width
+							# first cut away
+							value = value[0..(width-1)]
+							# then prepend the spacer if not nil
+							value = spacer + value while spacer.length > 0 and value.length < width
+						end
+						value
+					}
+					p new_path
 				}
 			end
 
@@ -43,7 +70,7 @@ module Jewelled
 				directory = Dir.new(directory) if directory.class == String
 				directory.each { |entry|
 					next if entry == '.' or entry == '..'
-					p path = directory.path + '/' + entry
+					path = directory.path + '/' + entry
 					case File.ftype(path)
 						# Anything that's not a file or directory is ignored
 						when 'file' then

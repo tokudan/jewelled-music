@@ -19,16 +19,20 @@ Jewelled music organizes your music library and creates a mirror that contains l
 	banner <<-EOS
 This option expects a string that will be used to build the target path for each file.
 It should contain variables that will be replaced by the information read from the tags of each file.
-Example: --organize "<album_artist>/<album>/<disc:02>-<track:02> <title>"
+Example: --organize "<album_artist>/<album>/<disc:02>-<track:03> <title>"
 Common variables that can be found in music files:
 album, album_artist, artist, date, disc, genre, title, track
-Special formatting options:
+Special formatting options (must appear in the order they are shown here):
 <number>    Force that variable to a specific length. If the number starts with a zero, the variable will be considered
 			padded with zeros in front, if necessary. If there is a space in front of the number, it will be padded with
 			spaces instead.
+=abc        Uses the value of the variable, but if that variable is not defined, use "abc"
+Example: <track:03=1>
+This will insert the variable track. If it is not set, the value 1 will be used. Additionally, the variable is padded
+in the front with zeroes until it reaches a length of 3 characters.
 	EOS
 end
 Trollop::die :music, 'Music library must be specified' if opts[:music] == nil
 
 music_lib = Jewelled::Music::Library.new(opts[:music], {:organize => opts[:organize]})
-p music_lib
+music_lib.organize
