@@ -8,6 +8,8 @@ module Jewelled
 			def initialize(path, options = Hash.new)
 				# @path contains the absolute path to the root directory of the music library
 				@path = File.absolute_path(path)
+				# Remove trailing slashes
+				@path = @path[0..-2] if @path[-1] == '/'
 				# @library is a hash that will contain an entry for each track in the form of
 				# "/absolute/path/to/file" => track
 				# where track is the Jewelled::Music::Track object for that file
@@ -50,7 +52,7 @@ module Jewelled
 						# nil can be converted to integer without any problems
 						width = match_data[:width].to_i
 						# Make sure the spacer is a string instead of nil
-						spacer = "" unless spacer
+						spacer = '' unless spacer
 						value = track.info[variable]
 						# If there is no information about the variable, return Unknown
 						value = default if value == nil
