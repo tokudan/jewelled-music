@@ -25,10 +25,10 @@ module Jewelled
 
 			def scan_files
 				scan_directory(Dir.new(@path))
-				organize if @organize
+				organize_source if @organize
 			end
 
-			def organize
+			def organize_source
 				# The regular expression used to parse a variable
 				variable_reg_ex = /^<(?<variable>[^:]+)(:(?<spacer> |0)?(?<width>[0-9]+)?(=(?<default>.*))?)?>$/
 				@library.each_pair { |path, track|

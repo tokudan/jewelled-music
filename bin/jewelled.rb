@@ -37,4 +37,4 @@ end
 Trollop::die :music, 'Music library must be specified' if opts[:music] == nil
 
 music_lib = Jewelled::Music::Library.new(opts[:music], {:organize => opts[:organize]})
-music_lib.organize
+music_lib.organize_source
