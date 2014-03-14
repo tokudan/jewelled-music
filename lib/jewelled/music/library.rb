@@ -16,6 +16,8 @@ module Jewelled
 					case key
 						when :organize then
 							@organize = value
+						when :preview then
+							@preview = value
 						else
 							raise
 					end

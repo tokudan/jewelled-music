@@ -36,5 +36,5 @@ in the front with zeroes until it reaches a length of 3 characters.
 end
 Trollop::die :music, 'Music library must be specified' if opts[:music] == nil
 
-music_lib = Jewelled::Music::Library.new(opts[:music], {:organize => opts[:organize]})
+music_lib = Jewelled::Music::Library.new(opts[:music], {:organize => opts[:organize], :preview => opts[:preview]})
 music_lib.organize_source
