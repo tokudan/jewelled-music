@@ -14,8 +14,10 @@ Jewelled music organizes your music library and creates a mirror that contains l
 	    'Sync music to target directory',
 	    :type => :string
 	opt :organize,
-	    'Organize the music directory',
+	    'Organize the target directory',
 	    :type => :string
+	opt ("organize-source".to_sym),
+	    'Organize the music directory'
 	banner <<-EOS
 This option expects a string that will be used to build the target path for each file.
 It should contain variables that will be replaced by the information read from the tags of each file.
