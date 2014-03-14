@@ -1,4 +1,5 @@
 require 'jewelled/music/track'
+require 'fileutils'
 
 module Jewelled
 	module Music
@@ -40,7 +41,10 @@ module Jewelled
 					# Sanity check
 					raise unless path.start_with?(@path)
 					raise unless track.class == Track
-					puts "pattern: #{@organize}"
+					# Cut off the library path
+					path = path[(@path.length)..-1]
+					path = path[1..-1] if path.start_with?('/')
+					extension = File.extname(path)
 					new_path = @organize.gsub(/<[^>]+>/) { |match|
 						# Parse the variable and the options
 						match_data = variable_reg_ex.match(match)
@@ -65,7 +69,36 @@ module Jewelled
 						end
 						value
 					}
-					p new_path
+					new_path += '' + extension
+					if path != new_path
+						full_path = "#{@path}/#{path}"
+						new_full_path = "#{@path}/#{new_path}"
+						$stderr.puts("Move: #{path} => #{new_path}")
+						# If the preview option is not set...
+						unless @preview
+							# And the target file does not exist yet...
+							unless File.exists?(new_full_path)
+								# Make sure the target directory exists...
+								target_dir = File.dirname(new_full_path)
+								FileUtils.mkdir_p(target_dir)
+								# Move the file
+								FileUtils.move(full_path, new_full_path)
+								# If the source directory is empty, remove it
+								source_dir = File.dirname(full_path)
+								begin
+									while true
+										# Dir.unlink will only remove empty directories and raises an exception
+										# when used on a non-empty directory, which is perfect for
+										# breaking out of the endless loop.
+										Dir.unlink(source_dir)
+										source_dir = File.dirname(source_dir)
+									end
+								rescue
+									# No action necessary, reaching this rescue is expected.
+								end
+							end
+						end
+					end
 				}
 			end
 
