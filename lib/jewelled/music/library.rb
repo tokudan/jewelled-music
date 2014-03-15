@@ -34,6 +34,13 @@ module Jewelled
 			end
 
 			def organize_source
+				@library.each_value { |track|
+					Track.organize({:base_dir => @path, :pattern => @organize})
+				}
+
+				# Disable all following code as it will be moved to the Track class
+				return nil
+
 				# The regular expression used to parse a variable
 				variable_reg_ex = /^<(?<variable>[^:]+)(:(?<spacer> |0)?(?<width>[0-9]+)?(=(?<default>.*))?)?>$/
 				@library.each_pair { |path, track|
