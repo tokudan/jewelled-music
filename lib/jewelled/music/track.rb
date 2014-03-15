@@ -48,8 +48,6 @@ module Jewelled
 			end
 
 			def organize(options)
-				$stderr.puts('Track#organize not implemented yet.')
-
 				base_dir = options[:base_dir]
 				pattern = options[:pattern]
 				preview = options[:preview]
