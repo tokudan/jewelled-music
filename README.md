@@ -1,5 +1,9 @@
 # Jewelled::Music
 
+# WARNING: Only some very basic features currently exist. A lot of sanity checks are still missing.
+# Only use when you got a good backup of your data!
+
+
 TODO: Write a gem description
 
 A ruby gem that manages your music library.
