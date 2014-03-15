@@ -30,17 +30,13 @@ module Jewelled
 
 			def scan_files
 				scan_directory(Dir.new(@path))
-				organize_source if @organize
+				organize_library if @organize
 			end
 
-			def organize_source
-				@library.each_value { |track|
+			def organize_library
+			@library.each_value { |track|
 					track.organize({:base_dir => @path, :pattern => @organize, :preview => @preview})
 				}
-
-				# Disable all following code as it will be moved to the Track class
-				return nil
-
 			end
 
 			def scan_directory(directory)
