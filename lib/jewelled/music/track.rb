@@ -47,9 +47,85 @@ module Jewelled
 				}
 			end
 
-			def organize
+			def organize(options)
 				$stderr.puts('Track#organize not implemented yet.')
 
+				base_dir = options[:base_dir]
+				pattern = options[:pattern]
+				preview = options[:preview]
+
+				# The regular expression used to parse a variable
+				variable_reg_ex = /^<(?<variable>[^:]+)(:(?<spacer> |0)?(?<width>[0-9]+)?(=(?<default>.*))?)?>$/
+
+				# @path contains the full path to the track. It should start with base_dir.
+				# Sanity check
+				raise unless @path.start_with?(base_dir)
+
+				# Get the file extension
+				extension = File.extname(@path)
+
+				# Calculate the new path
+				new_path = base_dir
+				new_path += pattern.gsub(/<[^>]+>/) do | match |
+					# Parse the variable and the options
+					match_data = variable_reg_ex.match(match)
+					# Raise an error if the variable seems to be malformed
+					raise "Error in pattern #{match}" unless match_data
+					variable = match_data[:variable]
+					default = "#{variable} unknown"
+					default = match_data[:default] if match_data[:default]
+					spacer = match_data[:spacer]
+					# nil can be converted to integer without any problems
+					width = match_data[:width].to_i
+					# Make sure the spacer is a string instead of nil
+					spacer = '' unless spacer
+					value = @info[variable]
+					# If there is no information about the variable, return default value
+					value = default if value == nil
+					# Adjust the length...
+					if width
+						# first cut away
+						value = value[0..(width-1)]
+						# then prepend the spacer if not nil
+						value = spacer + value while spacer.length > 0 and value.length < width
+					end
+					value
+				end
+
+				# Append the file extension
+				new_path += '' + extension
+
+				# Check if the track needs to be moved
+				if @path != new_path
+					$stderr.puts("Move: #{@path} => #{new_path}")
+					old_path = @path
+					# If the preview option is not set...
+					unless preview
+						# And the target file does not exist yet...
+						unless File.exists?(new_path)
+							# Make sure the target directory exists...
+							target_dir = File.dirname(new_path)
+							FileUtils.mkdir_p(target_dir)
+							# Move the file
+							FileUtils.move(old_path, new_path)
+							# Update the current path of the track
+							@path = new_path
+							# If the source directory is empty, remove it
+							source_dir = File.dirname(old_path)
+							begin
+								while true
+									# Dir.unlink will only remove empty directories and raises an exception
+									# when used on a non-empty directory, which is perfect for
+									# breaking out of the endless loop.
+									Dir.unlink(source_dir)
+									source_dir = File.dirname(source_dir)
+								end
+							rescue
+								# No action necessary, reaching this rescue is expected.
+							end
+						end
+					end
+				end
 			end
 		end
 	end
