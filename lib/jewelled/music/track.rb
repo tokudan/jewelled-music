@@ -46,6 +46,10 @@ module Jewelled
 					end
 				}
 			end
+
+		def organize
+			$stderr.puts('Track#organize not implemented yet.')
+		end
 		end
 	end
 end
