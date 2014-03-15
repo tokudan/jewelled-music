@@ -65,7 +65,7 @@ module Jewelled
 				extension = File.extname(@path)
 
 				# Calculate the new path
-				new_path = base_dir
+				new_path = base_dir + '/'
 				new_path += pattern.gsub(/<[^>]+>/) do | match |
 					# Parse the variable and the options
 					match_data = variable_reg_ex.match(match)
