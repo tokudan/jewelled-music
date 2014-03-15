@@ -4,7 +4,7 @@ module Jewelled
 	module Music
 		class Track
 			# TODO: Write a decent interface for @info
-		attr_reader :info, :valid
+			attr_reader :info, :valid
 
 			def initialize(file)
 				@path = File.absolute_path(file)
@@ -47,9 +47,10 @@ module Jewelled
 				}
 			end
 
-		def organize
-			$stderr.puts('Track#organize not implemented yet.')
-		end
+			def organize
+				$stderr.puts('Track#organize not implemented yet.')
+
+			end
 		end
 	end
 end
