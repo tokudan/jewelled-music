@@ -2,7 +2,7 @@
   <configuration default="false" name="Jewelled" type="RubyRunConfigurationType" factoryName="Ruby" editBeforeRun="true" singleton="true">
     <module name="jewelled-music" />
     <RUBY_RUN_CONFIG NAME="RUBY_ARGS" VALUE="-e $stdout.sync=true;$stderr.sync=true;load($0=ARGV.shift)" />
-    <RUBY_RUN_CONFIG NAME="WORK DIR" VALUE="$USER_HOME$/Musik" />
+    <RUBY_RUN_CONFIG NAME="WORK DIR" VALUE="$USER_HOME$/Musik/Hamasaki, Ayumi/Rainbow" />
     <RUBY_RUN_CONFIG NAME="SHOULD_USE_SDK" VALUE="false" />
     <RUBY_RUN_CONFIG NAME="ALTERN_SDK_NAME" VALUE="" />
     <RUBY_RUN_CONFIG NAME="myPassParentEnvs" VALUE="true" />
@@ -15,8 +15,8 @@
       </COVERAGE_PATTERN>
     </EXTENSION>
     <EXTENSION ID="org.jetbrains.plugins.ruby.motion.run.MotionSimulatorRunExtension" />
-    <RUBY_RUN_CONFIG NAME="SCRIPT_PATH" VALUE="$MODULE_DIR$/bin/jewelled.rb" />
-    <RUBY_RUN_CONFIG NAME="SCRIPT_ARGS" VALUE="" />
+    <RUBY_RUN_CONFIG NAME="SCRIPT_PATH" VALUE="$MODULE_DIR$/jewelled.rb" />
+    <RUBY_RUN_CONFIG NAME="SCRIPT_ARGS" VALUE="-m . -p -o '&lt;album_artist&gt;/&lt;album=Unknown&gt;/&lt;disc:02&gt;-&lt;track:03&gt; &lt;title&gt;'" />
     <RunnerSettings RunnerId="RubyDebugRunner" />
     <ConfigurationWrapper RunnerId="RubyDebugRunner" />
     <method />
